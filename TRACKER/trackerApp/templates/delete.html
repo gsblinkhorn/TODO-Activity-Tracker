@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <!--
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-warning alert-dismissable" roles="alert">
+                <button class="close" data-dismiss="alert">
+                    <small><sup>x</sup></small>
+                </button>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    -->
+
+    <table class="table table-bordered list-table">
+        <tr class="table-header">
+            <td class="td-activity">Activites</td>
+            <td class="td-option">Subject</td>
+            <td class="td-option">Due Date</td>
+            <td class="td-option">Actions</td>
+        </tr>
+        {% if all_items %}
+        {% for item in all_items %}
+        <!--IF THING IS EQUAL TO THE RECORD_ID WE WANT TO EDIT-->
+        {% ifequal item.id|stringformat:"i" delete_item_id %} 
+        <tr class="table">
+            <form class="form-inline my-2 my-lg-0" method="POST">
+                <td>
+                    {{ item.activity }}
+                </td>
+                {% csrf_token %}
+                <td class="td-option td-center">
+                    {{ item.subject }}
+                </td>
+                <td class="td-option td-center">
+                    {{ item.date | date:'Y-m-d' }}
+                </td>
+                <td class="td-option td-center">
+                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Confirm Deletion</button>
+                </td>  
+            </form>
+        </tr>
+        {% else %}
+        {% if item.isCompleted %}
+        <tr class="table-success">
+            <td class="striker">{{ item.activity }}</td>
+            <td class="td-option td-center">{{ item.subject }}</td>
+            <td class="td-option td-center">{{ item.date }}</td>
+            <td class="td-option">
+                <a href="{% url 'uncross' item.id %}">
+                    <img class="option-img" src="/static/images/undo.png">
+                </a>
+                <a href="{% url 'edit' item.id %}">
+                    <img class="option-img" src="/static/images/pencil.png">
+                </a>
+                <a href="{% url 'delete' item.id %}">
+                    <img class="option-img" src="/static/images/eraser.png">
+                </a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td>{{ item.activity }}</td>
+            <td class="td-option td-center">{{ item.subject }}</td>
+            <td class="td-option td-center">{{ item.date }}</td>
+            <td class="td-option">
+                    <a href="{% url 'cross_off' item.id %}">
+                        <img class="option-img" src="/static/images/checkmark.png">
+                    </a>
+                    <a href="{% url 'edit' item.id %}">
+                        <img class="option-img" src="/static/images/pencil.png">
+                    </a>
+                    <a href="{% url 'delete' item.id %}">
+                        <img class="option-img" src="/static/images/eraser.png">
+                    </a>
+            </td>
+        </tr>
+        {% endif %}
+        {% endifequal %}
+        {% endfor %}
+    </table>
+    {% endif %}
+{% endblock %}
+
+
