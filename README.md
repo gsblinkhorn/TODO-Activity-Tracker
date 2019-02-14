@@ -9,12 +9,12 @@ well as their subjects and due dates. Deployment is handled via docker and docke
 
 `git clone https://github.com/gsblinkhorn/TODO-List-App.git`
 
-2. Add your domain to ALLOWED_HOSTS (you can skip this if you are running locally)
+2. Add your Domain/IP Address to ALLOWED_HOSTS (you can skip this if you are running locally)
 
-`vim TRACKER/settings.py`
+`vim TRACKER/TRACKER/settings.py`
 
-Change ALLOWED_HOSTS = ['0.0.0.0','127.0.0.1','localhost',] to ALLOWED_HOSTS = ['0.0.0.0','127.0.0.1','localhost', $YOUR_HOST_HERE]
+Change ALLOWED_HOSTS = ['0.0.0.0','127.0.0.1','localhost',] to ALLOWED_HOSTS = ['0.0.0.0','127.0.0.1','localhost', '$YOUR_HOST_HERE',]
 
 3. Run `docker-compose up` from the project's root directory
 
-After building the image and starting the docker container, the TODO app should be available on your domain at port 8000
+After building the image and starting the docker container, the TODO app should be available on your host at port 8000
