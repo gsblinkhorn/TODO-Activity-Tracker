@@ -18,5 +18,8 @@ RUN pip3 install -r requirements.txt
 # Server
 EXPOSE 8000
 STOPSIGNAL SIGINT
-ENTRYPOINT ["python", "manage.py"]
-CMD ["runserver", "0.0.0.0:8000"]
+
+COPY ./docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["django"]
