@@ -10,7 +10,7 @@ def home(request):
         form = ListForm(request.POST or None)
         if form.is_valid():
             form.save()
-            messages.success(request, ('Item has been successfully added to your TODO list!'))
+            #messages.success(request, ('Item has been successfully added to your TODO list!'))
         else:
             messages.success(request, ('Oops! You can\'t add a blank item to your TODO list.'))
         
@@ -35,7 +35,7 @@ def edit(request, list_id):
 
         if form.is_valid():
             form.save()
-            messages.success(request, ('Your activity has been successfully edited!'))
+            #messages.success(request, ('Your activity has been successfully edited!'))
         else:
             messages.success(request, form.errors)
         
@@ -43,16 +43,16 @@ def edit(request, list_id):
     
     else:
         all_items = List.objects.all().order_by('date')
-        messages.success(request, ('EDITING A RECORD'))
+        #messages.success(request, ('EDITING A RECORD'))
         return render(request, 'edit.html', {'all_items': all_items, 'edit_item_id': list_id})
 
 def delete(request, list_id):
     if request.method == 'POST':
         item = List.objects.get(pk=list_id)
         item.delete()
-        messages.success(request, ('Item has been successfully deleted from your TODO list.'))
+        #messages.success(request, ('Item has been successfully deleted from your TODO list.'))
         return redirect('home')
     else:
         all_items = List.objects.all().order_by('date')
-        messages.success(request, ('DELETING A RECORD'))
+        #messages.success(request, ('DELETING A RECORD'))
         return render(request, 'delete.html', {'all_items': all_items, 'delete_item_id': list_id})
